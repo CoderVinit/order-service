@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  order-service:
+    build: .
+    container_name: order-service
+    environment:
+      - NODE_ENV=production
+      - PORT=3003
+      - MONGODB_URI=mongodb://mongo:27017/order-db
+      - RABBITMQ_URL=amqp://app:app@rabbitmq:5672
+    env_file:
+      - .env
+    ports:
+      - "3003:3003"
+    restart: unless-stopped
+    networks:
+      - micro-net
+
+networks:
+  micro-net:
+    name: micro-net
